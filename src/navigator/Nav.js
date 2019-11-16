@@ -12,12 +12,18 @@ import Login from '../screens/Login';
 import LoginForm from '../screens/Login/LoginForm';
 import T_Login from "../screens/Login/T_Login";
 import V_Login from '../screens/Login/V_Login';
+import SignUp from '../screens/Login/SignUp';
+import {connect} from 'react-redux';
+import Cart from '../screens/Cart';
+import ProductModal from '../screens/ProductModal';
+
 
 class Nav extends React.Component {
 
     state = {
         isLoggedIn: false,
-        auth: ''
+        auth: '',
+        signUpSuccess: this.props.signUpSuccess
     }
 
 
@@ -38,28 +44,64 @@ class Nav extends React.Component {
 
         return (
             <View style={{ flex: 1 }}>
-                <StatusBar backgroundColor = '#6C63FF' />
-                {/* {this.state.isLoggedIn ?  */}
-                <AppCont />
-                 {/* : 
-                <Account/>} */}
+                {/* <StatusBar backgroundColor = '#6C63FF' /> */}
+                {/* <ProductModal/> */}
+                <AppCont/>
+                {/* <LoginCont/> */}
+                
+
             </View>
         )
     }
 }
 
+
+
 const LoginNav = createStackNavigator({
+    SignUp:{
+        
+        screen : SignUp,
+        navigationOptions:{
+            header :() => null
+        }
+        
+    }
+    ,
     UserLogin: {
-        screen: LoginForm
+        screen: LoginForm,
+
+        navigationOptions:{
+            header :() => null,
+            
+        }
     },
     TailorLogin: {
-        screen: T_Login
+        screen: T_Login,
+        navigationOptions:{
+            header :() => null
+        }
     },
     VendorLogin: {
-        screen: V_Login
+        screen: V_Login,
+        navigationOptions:{
+            header :() => null
+        }
+    },
+    TrueReg :{
+        screen: Friends,
+        navigationOptions:{
+            header :() => null
+        }
     }
+    
 
-})
+}
+,
+    {
+        headerMode:'float'
+    })
+
+const LoginCont = createAppContainer(LoginNav);
 
 
 const MyNav = createMaterialBottomTabNavigator({
@@ -71,8 +113,8 @@ const MyNav = createMaterialBottomTabNavigator({
 
             tabBarIcon: ({ tintColor }) => (
                 <Image
-                    style={{ height: 30, width: 30, tintColor: tintColor }}
-                    source={require('../assets/icons/wh.png')}
+                    style={{ height: 25, width: 25, tintColor: tintColor }}
+                    source={require('../assets/icons/bottomNavBarIcons/Cart.png')}
                 />
             ),
             tabBarLabel: () => null,
@@ -83,7 +125,7 @@ const MyNav = createMaterialBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
                 <Image
-                    style={{ height: 30, width: 30, tintColor: tintColor }}
+                    style={{ height: 25, width: 25, tintColor: tintColor }}
                     source={require('../assets/icons/avatar.png')}
                 />
             ),
@@ -93,11 +135,11 @@ const MyNav = createMaterialBottomTabNavigator({
         }
     },
     Home: {
-        screen: Home,
+        screen: Cart,
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
                 <Image
-                    style={{ height: 30, width: 30, tintColor: tintColor }}
+                    style={{ height: 25, width: 25, tintColor: tintColor }}
                     source={require('../assets/icons/shop.png')}
                 />
             ),
@@ -109,8 +151,8 @@ const MyNav = createMaterialBottomTabNavigator({
         navigationOptions: {
             tabBarIcon: ({ tintColor }) => (
                 <Image
-                    style={{ height: 30, width: 30, tintColor: tintColor }}
-                    source={require('../assets/icons/mannequin.png')}
+                    style={{ height: 25, width: 25, tintColor: tintColor }}
+                    source={require('../assets/icons/bottomNavBarIcons/Home.png')}
                 />
             ),
             tabBarLabel: () => null,
@@ -133,8 +175,8 @@ const MyNav = createMaterialBottomTabNavigator({
 
 },
     {
-    
-        initialRouteName: 'Home',
+        
+        initialRouteName: 'Explore',
         activeColor: '#5374eb',
         barStyle: {
             
@@ -170,4 +212,24 @@ const Navigator = createStackNavigator({
 const AppCont = createAppContainer(Navigator);
 
 
-export default Nav;
+const MapStateToProps = (auth) => {
+
+    const { userName, password, email, error_message , signUpSuccess} = auth
+
+    console.log('gooloto', password, email, userName, error_message , signUpSuccess);
+
+
+    return {
+
+        auth,
+        userName,
+        password,
+        email,
+        error_message,
+        signUpSuccess
+
+    };
+
+};
+
+export default connect(MapStateToProps)(Nav);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet, FlatList} from 'react-native';
+import { View, Text, Image, StyleSheet, FlatList, StatusBar} from 'react-native';
 import { Transition } from 'react-navigation-fluid-transitions';
 
 
@@ -38,9 +38,10 @@ class Account extends React.Component {
 
     render() {
 
-        const src = require('../assets/icons/avatar.png')
+        // const src = require('../assets/icons/avatar.png')
         return (
             <View style={{ alignContent: "center", justifyContent: 'center', flex: 1, }}>
+                <StatusBar backgroundColor = '#6C63FF' />
                 <View style={cs.header}>
                     <View style={{ flex: 1, flexDirection: 'row', backgroundColor: '#6C63FF', borderBottomLeftRadius: 25, borderBottomRightRadius: 25 }}>
                         <Transition shared='avatar'>

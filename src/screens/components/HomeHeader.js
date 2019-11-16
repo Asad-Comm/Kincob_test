@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image , Text } from 'react-native'
+import { View, Image , Text ,TextInput } from 'react-native'
 import { SearchBar } from 'react-native-elements';
 
 
@@ -15,14 +15,15 @@ class HomeHeader extends React.Component {
 
     render() {
         return (
-            <View style={{  marginTop: 10, flex: 0.7, alignSelf: "center", backgroundColor: "#ffffff",height: 50 , width: 10,borderTopRightRadius: 2, borderBottomRightRadius: 2, borderTopLeftRadius: 2, borderBottomLeftRadius: 2 }}>
-            <View style ={{flex:5 , backgroundColor:"gray" , borderBottomLeftRadius:20  , borderBottomRightRadius:20}}>
-
-            </View>
-
-            <View style = {{ flex : 1, backgroundColor:'black'}}>
-
-            </View>
+            <View style={{ borderColor:'lightgray',borderWidth:1,elevation:5,justifyContent:'center',width:"90%", marginTop: 10, alignSelf: "center", backgroundColor: "#ffffff",height: "22%" ,borderTopRightRadius: 20, borderBottomRightRadius: 20, borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
+                {/* <Text style ={{fontSize:15 , color:'gray', fontWeight:'900',padding:10}}>
+                    Search something...
+                </Text> */}
+                <TextInput
+                style ={{width : "80%",padding:5}}
+                placeholder =" Search something..."
+                placeholderTextColor = 'gray'
+                />
 
             </View>
         )

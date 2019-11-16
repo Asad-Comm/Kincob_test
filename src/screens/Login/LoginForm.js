@@ -1,18 +1,67 @@
 import React from 'react';
-import { Text, View, TouchableHighlight, Image } from 'react-native';
+import { Text, View, TouchableHighlight, Image , Platform , LayoutAnimation , UIManager , BackHandler } from 'react-native';
+import * as AmazonCognitoIdentity from 'amazon-cognito-identity-js';
 import { LoginCard, CardItem } from '../../Common';
 import Input from './Input';
+import { connect } from 'react-redux';
+
+
+if (Platform.OS === 'android') { UIManager.setLayoutAnimationEnabledExperimental(true) }
+
+var CustomLayoutAnimation = {
+    duration: 1000,
+    create: {
+      type: LayoutAnimation.Types.easeInEaseOut,
+      property: LayoutAnimation.Properties.opacity,
+    },
+    update: {
+      type: LayoutAnimation.Types.curveEaseInEaseOut,
+    },
+  };
+
+  var CustomLayoutSpring = {
+    duration: 500,
+    create: {
+        type: LayoutAnimation.Types.easeInEaseOut,
+        property: LayoutAnimation.Properties.scaleXY,
+        springDamping: 0.9,
+    },
+    update: {
+        type: LayoutAnimation.Types.spring,
+        springDamping: 0.7,
+    },
+        
+    
+};
+
 
 class LoginForm extends React.Component {
 
+    
+      
+
+    // componentWillUnmount() {
+    //     BackHandler.removeEventListener('hardwareBackPress');
+    //   }
+
+    // componentDidMount(){
+    //     LayoutAnimation.configureNext(CustomLayoutSpring);
+    //     BackHandler.addEventListener(
+    //         "hardwareBackPress",
+    //         BackHandler.exitApp()
+    //     )
+        
+
+    // }
 
 
     state = {
 
         error: '',
+        password: '',
+        username: ''
 
-
-    };
+    }
 
 
 
@@ -34,22 +83,54 @@ class LoginForm extends React.Component {
         this.props.passwordChanged(text);
     }
 
-   
+
 
     onButtonPress() {
-        // const {email, password} = this.props;
-
-        var email = 'email@email.com';
-        var password = '123456';
-
-        console.log("Email", email, 'password', password);
-        this.props.loginUser({ email, password }, success => {
 
 
-            this.props.navigation.navigate('Drawer')
-            console.log('success', success);
+        var authenticationData = {
+            Username: this.state.Username, // your username here
+            Password: this.state.password, // your password here
+        };
+       let authenticationDetails =
+            new AmazonCognitoIdentity.AuthenticationDetails(authenticationData);
 
+            const userData = {
+                Username: this.props.user.username,
+                Pool: this.props.user.pool
+            }
+
+         let cognitoUser =
+            new AmazonCognitoIdentity.CognitoUser(userData);
+        cognitoUser.authenticateUser(authenticationDetails, {
+            onSuccess: function (result) {
+                let accessToken = result.getAccessToken().getJwtToken();
+                console.log('login sucessful');
+
+            },
+
+            onFailure: function (err) {
+                alert(err);
+            },
+            mfaRequired: function (codeDeliveryDetails) {
+                var verificationCode = prompt('Please input verification code', '');
+                cognitoUser.sendMFACode(verificationCode, this);
+            }
         });
+
+        // // const {email, password} = this.props;
+
+        // var email = 'email@email.com';
+        // var password = '123456';
+
+        // console.log("Email", email, 'password', password);
+        // this.props.loginUser({ email, password }, success => {
+
+
+        //     this.props.navigation.navigate('Drawer')
+        //     console.log('success', success);
+
+        // });
 
     }
 
@@ -62,7 +143,7 @@ class LoginForm extends React.Component {
         // }  
         return (
             <TouchableHighlight
-                style={{ borderRadius: 12, backgroundColor: "#34abe0", width: '70%' }}
+                style={{ borderRadius: 32, backgroundColor: '#903DFF', width: '80%', marginTop: 50 }}
                 underlayColor="#1e5ec1"
                 activeOpacity={0.8}
                 onPress={this.onButtonPress.bind(this)}>
@@ -118,21 +199,24 @@ class LoginForm extends React.Component {
     render() {
 
         return (
-            <View style={{ flex: 1,  backgroundColor: '#2A2B3C'}}>
+            <View style={{ flex: 1, backgroundColor: '#2A2B3C' }}>
+                <Text style={{ fontSize: 55, color: 'white', marginTop: 60, marginBottom: 30, alignSelf:'center' }}>KINCOB</Text>
+
                 {/* <Transition shared = "logo">
                 <Image
                 style ={{ height : 100 , width: 100 , marginTop : 70 , alignSelf : 'center'}}
                 source = {require("../../assets/logo/weather.png")}
                 />
                 </Transition> */}
-                <Text style={{ marginBottom: 120, fontSize: 25, alignSelf: 'center', marginTop: 10, color: 'white' }}>User Login</Text>
+                <Text style={{ marginBottom: 90, fontSize: 25, alignSelf: 'center', marginTop: 40, color: 'white' }}>User Login</Text>
                 <LoginCard
                 >
                     <CardItem>
                         <Input
-                            label="Email"
-                            placeholder="example@email.com"
-                            onChangeText={(text) => this.onEmailChange(text)}
+                            label="Name"
+                            placeholder="User Name"
+                            placeholderTextColor='gray'
+                            onChangeText={(username) => this.setState({ username })}
                             value={this.props.email}
                         />
                     </CardItem>
@@ -143,7 +227,8 @@ class LoginForm extends React.Component {
                             secureTextEntry
                             label="Password"
                             placeholder="password"
-                            // onChangeText={(text) => this.onPasswordChange(text)}
+                            placeholderTextColor='gray'
+                            onChangeText={(password) => this.setState({ password })}
                             value={this.props.password}
                         />
                     </CardItem>
@@ -175,7 +260,6 @@ class LoginForm extends React.Component {
 
 
 
-export default LoginForm
 
 
 const styles = {
@@ -189,3 +273,24 @@ const styles = {
     }
 
 }
+
+const MapStateToProps = ({auth}) => {
+
+    const { user } = auth
+
+    console.log('Loggin in', user);
+
+
+    return {
+
+        auth,
+        user
+
+    };
+
+};
+
+
+
+
+export default connect(MapStateToProps)(LoginForm);

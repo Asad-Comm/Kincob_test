@@ -1,6 +1,8 @@
 import {EMAIL_CHANGED,
     PASSWORD_CHANGED,
-    NAME_CHANGED
+    LOGIN_USER,
+    NAME_CHANGED,
+    USER_DUPLICATION_ERROR
 }
      from './types';
 
@@ -9,8 +11,11 @@ import {EMAIL_CHANGED,
          email : '', 
          password: '',
          loading: false,
-         error:'',
-         userName: 'mashkaak'
+         error_message:'',
+         userName: '',
+         signUpSuccess:false,
+         user: null,
+         
         
         };
     
@@ -23,8 +28,10 @@ import {EMAIL_CHANGED,
                 return ( {...state, email: action.payload});
             case PASSWORD_CHANGED:
                 return({...state, password: action.payload});  
-            // case LOGIN_USER:
-            //     return ({...state, loading:true, error:''});    
+            case USER_DUPLICATION_ERROR:
+                return({...state , error_message: action.payload});
+            case LOGIN_USER:
+                return ({...state, signUpSuccess:true, error_message:null , user : action.payload});    
             // case LOGIN_USER_SUCCESS:
             //     return ({...state, 
             //         user: action.payload,

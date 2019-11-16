@@ -6,6 +6,8 @@ import { Provider } from 'react-redux';
 import { store, persistor } from './src/Store/store';
 import { PersistGate } from 'redux-persist/integration/react';
 
+
+
 class App extends React.Component {
 
   constructor(props) {
@@ -17,13 +19,11 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-       <PersistGate loading = {null} persistor = {persistor}>
-          {/* <View style={{ flex: 1 }}> */}
-            {/* <Nav /> */}
-            <SignUp />
-          {/* </View> */}
-          </PersistGate>
+        <PersistGate loading={null} persistor={persistor}>
+          <Nav />
+        </PersistGate>
       </Provider>
+
     )
   }
 }
