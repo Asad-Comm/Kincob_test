@@ -1,8 +1,8 @@
 import React from 'react';
-import {TouchableHighlight,Text} from 'react-native';
+import {TouchableHighlight,Image} from 'react-native';
 
 
-const DeleteButton = ({onPress,complete,name,firstForm}) => {
+const DeleteButton = ({onPress}) => {
 
 
     return(
@@ -10,15 +10,11 @@ const DeleteButton = ({onPress,complete,name,firstForm}) => {
     onPress={onPress}
     underlayColor='#efefef'
     style={styles.button}>
-    <Text style={[
-      styles.text,
-      complete ? styles.complete : null,    
-      name === 'Delete' ? styles.deleteButton : null,
-      firstForm  ? styles.toggleEdit : null
-    ]}    
-     >
-      {name}
-    </Text>
+    <Image
+    source ={require('../assets/icons/delete_1.png')}
+    style ={{tintColor:'black', height:25,width:25}}
+    />
+    
   </TouchableHighlight>
 
     );
@@ -30,11 +26,7 @@ const styles = {
     button: {
         alignSelf: 'flex-end',
         padding: 8,
-        borderColor: 'white',
-        backgroundColor:'#232f3e',
-        borderWidth: 1,
-        borderRadius: 10,
-        marginRight: 5
+        
       },
       text: {
         color: '#666666'

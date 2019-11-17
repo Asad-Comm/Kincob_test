@@ -68,7 +68,7 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, totalAmount: state.totalAmount + action.value }
 
         case "clearCart":
-            return INITIAL_STATE
+            return {...state, items_in_cart: [] , totalAmount : 0}
 
         case SHOW_MODAL:
             console.log('action payloda', action.payload)
