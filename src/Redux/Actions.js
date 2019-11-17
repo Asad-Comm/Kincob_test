@@ -170,14 +170,15 @@ export const fetchProducts = ({ data }) => {
 }
 
 
-export const addNewItem = ({ name, price, url }) => {
-    console.log('action name:', name, "price:", price, "my url:", url)
+export const addNewItem = ({title,price,src,id}) => {
+    console.log('action name: Adding To Cart', title, "price:", price, "my url:", src)
 
     return ({
         type: ADD_ITEM,
-        currentItem: name,
+        currentItem: title,
         item_price: price,
-        source: url
+        source: src,
+        product_id: id
     })
 }
 

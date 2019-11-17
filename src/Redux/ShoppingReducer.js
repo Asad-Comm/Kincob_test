@@ -33,7 +33,8 @@ export default (state = INITIAL_STATE, action) => {
                 name: action.currentItem,
                 item_index: state.item_index++,
                 price: action.item_price,
-                source: action.source
+                source: action.source,
+                product_id:action.product_id
 
 
             }

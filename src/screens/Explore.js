@@ -17,7 +17,7 @@ class Explore extends React.Component {
         cart_pany: null,
         data: this.props.products,
         showProduct: this.props.toggleModal,
-        item: null
+        item: {src:'hello'}
         // valueX : 10
     }
 
@@ -155,8 +155,8 @@ class Explore extends React.Component {
                     CLEAR
                     </Text>
                 <FlatList
-                    contentContainerStyle={{ flexWrap: 'wrap', width: width }} horizontal
-                    style={{ backgroundColor: 'white' }}
+                    contentContainerStyle={{ flexWrap: 'wrap', width: width}} horizontal
+                    style={{ backgroundColor: 'white'  }}
                     data={["Jacket with white mask ", "Wool pencil trousers gray", "Black Leather", "Sharpy pencil ", "Black Leather"]}
                     renderItem={(item) => {
                         return (
@@ -168,6 +168,7 @@ class Explore extends React.Component {
                         )
                     }}
                 />
+               
 
                 <Animated.View
                     style={{
@@ -200,21 +201,7 @@ class Explore extends React.Component {
                     </View>
 
                 </Animated.View>
-                {/* <View style={{ flex: 10 }}> 
-                    <Text style = {{marginLeft : 110 , marginVertical : 120}}
-                        onPress={() => this.aniamteBar()}
-                    > Search Animate </Text>
-                    <Text style = {{marginLeft : 110}}
-                        onPress={() => this.resetBar()}
-                    > Search Deanimate </Text>
-                </View> */}
-
-                {/* <View 
-              {...handles}  
-                style={{ flex: 1, backgroundColor: 'black' }}>
-
-                </View> */}
-
+           
 
             </View>
         )
