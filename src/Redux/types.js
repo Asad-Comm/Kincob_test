@@ -10,3 +10,4 @@ export const DELETE_ITEM = 'delete_item';
 export const UPDATE_CART = 'update_cart';
 export const FETCH_PRODUCTS = 'fetch_products';
 export const SHOW_MODAL = 'show_product_page';
+export const FETCH_PRODUCTS_UNSTITCHED = 'fetch_unstitched_products';

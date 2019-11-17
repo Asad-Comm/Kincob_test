@@ -8,7 +8,8 @@ import {
     NAME_CHANGED,
     USER_DUPLICATION_ERROR,
     ADD_ITEM , DELETE_ITEM, UPDATE_CART , FETCH_PRODUCTS ,
-    SHOW_MODAL
+    SHOW_MODAL,
+    FETCH_PRODUCTS_UNSTITCHED
 }
     from './types';
 
@@ -145,10 +146,30 @@ const loginUserSuccess = (dispatch, user) => {
 
 
 export const clearCart = () => {
+ 
     return {
         type: "clearCart"
     }
 }
+
+// export const placeOrder = () => {
+//     return (dispatch) => {
+//         fetch({
+//             url : "https://ah3zewkpw1.execute-api.us-east-1.amazonaws.com/testflight/post",
+//             method:'POST',
+//             body:{
+//                 "Order_Id":"2",
+//                 "Product_Id":"5",
+//                 "Product_Name":"Indian Kurti"
+//                 }
+//         }).then(responsr => responsr.json()
+//         ).then(resjson => {console.log('Cart oreder placeds',resjson)}
+//         )
+//         dispatch({
+//             type : "order"
+//         })
+//     }
+// }
 
 
 export const addToTotal = ({ tl }) => {
@@ -164,6 +185,15 @@ export const fetchProducts = ({ data }) => {
     console.log(data)
     return {
         type: FETCH_PRODUCTS,
+        products: data
+    }
+
+}
+
+export const fetchProductsUnStitched = ({ data }) => {
+    console.log(data)
+    return {
+        type: FETCH_PRODUCTS_UNSTITCHED,
         products: data
     }
 

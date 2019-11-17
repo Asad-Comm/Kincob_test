@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, FlatList, Image, Picker, TouchableHighlight ,StatusBar ,UIManager, LayoutAnimation, Platform,  } from 'react-native';
+import { View, Text, FlatList, Image, Picker, TouchableHighlight, StatusBar, UIManager, LayoutAnimation, Platform, } from 'react-native';
 // import ProductList from './ProductList';
 import { connect } from 'react-redux';
-import { updateCart, delItem, addToTotal, clearCart } from '../Redux/Actions';
+import { updateCart, delItem, addToTotal, clearCart, placeOrder } from '../Redux/Actions';
 // import { Card } from './Card';
 import { CardItem } from '../Common/CardItem';
 import { Button } from '../Common/Button';
@@ -46,9 +46,9 @@ class Cart extends React.Component {
         LayoutAnimation.configureNext(CustomLayoutSpring);
         return (
             <View style={{ flex: 1 }}>
-<StatusBar backgroundColor ="transparent" translucent barStyle = 'dark-content' />
+                <StatusBar backgroundColor="transparent" translucent barStyle='dark-content' />
                 <FlatList
-                style ={{marginTop:50}}
+                    style={{ marginTop: 50 }}
                     data={this.props.items_in_cart}
                     renderItem={({ item }) => {
                         const { name, price, item_index, currentItem, source } = item;
@@ -59,13 +59,13 @@ class Cart extends React.Component {
                                 <View style={{ flex: 1, flexDirection: "row" }}>
                                     <View>
                                         <Image
-                                            style={{marginLeft:10, height: 130, width: 100 ,borderRadius:9 }}
+                                            style={{ marginLeft: 10, height: 130, width: 100, borderRadius: 9 }}
                                             source={{ uri: source }}
                                         />
                                     </View>
-                                    <View style={{ flexDirection: 'column', marginTop: 6 , justifyContent:'center' }}>
-                                        <Text style={{ fontSize: 18 , marginLeft:15, marginBottom:10 }}> {name}</Text>
-                                        <Text style={{  fontWeight: 'bold', fontSize: 20 }}>    ${price}</Text>
+                                    <View style={{ flexDirection: 'column', marginTop: 6, justifyContent: 'center' }}>
+                                        <Text style={{ fontSize: 18, marginLeft: 15, marginBottom: 10 }}> {name}</Text>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 20 }}>    ${price}</Text>
 
                                         <View style={{ flexDirection: 'row' }}>
 
@@ -95,7 +95,7 @@ class Cart extends React.Component {
                                         </View>
 
                                     </View>
-                                    <View style={{ alignSelf: 'flex-end', marginLeft: 80, marginBottom: 30 }}>
+                                    <View style={{ alignSelf: 'flex-end', marginLeft: 60, marginBottom: 30 }}>
                                         <DeleteButton
 
                                             onPress={() => this.props.delItem({ item_index, price })
@@ -112,12 +112,12 @@ class Cart extends React.Component {
 
                 <CardItem>
 
-                    <View style={{ elevation: 100,  flexDirection: 'row',width:350,flexWrap:'wrap' }}>
-                        <Text style={{ fontSize: 17, fontWeight: '600', borderColor: 'white', padding: 25 ,color:'gray',opacity:0.7}}>
+                    <View style={{ elevation: 100, flexDirection: 'row', width: 350, flexWrap: 'wrap' }}>
+                        <Text style={{ fontSize: 17, fontWeight: '600', borderColor: 'white', padding: 25, color: 'gray', opacity: 0.7 }}>
                             Total Amount :   $
                         </Text>
 
-                        <Text style={{ fontSize: 25, fontWeight: 'bold', padding: 10, borderRadius: 30, color:'#888888' , marginLeft:10}}>
+                        <Text style={{ fontSize: 25, fontWeight: 'bold', padding: 10, borderRadius: 30, color: '#888888', marginLeft: 10 }}>
                             {this.props.totalAmount.toFixed(2)}
                         </Text>
 
@@ -127,13 +127,41 @@ class Cart extends React.Component {
 
                 </CardItem>
                 <TouchableHighlight
-                underlayColor = '#c872ea'
-                style ={{elevation:10,height:50,width:150,backgroundColor:'#9258ef',borderRadius:20,justifyContent:'center',alignItems:'center',alignSelf:'center',marginBottom:15}}
+                    underlayColor='#c872ea'
+                    style={{ elevation: 10, height: 50, width: 150, backgroundColor: '#9258ef', borderRadius: 20, justifyContent: 'center', alignItems: 'center', alignSelf: 'center', marginBottom: 15 }}
                     onPress={() => {
                         this.props.clearCart()
+                        const {name , price , Product_Id} = this.props.currentItem
+                        console.log("asdsd", name,price,Product_Id);
+                        let i = 20
+                        const  order = {
+                            "Order_Id": '110',
+                            "Product_Name" : "Fleece Shirt",
+                            "Product_Id": "245",
+                            "Price": "99",
+                        }
+                        fetch('https://ah3zewkpw1.execute-api.us-east-1.amazonaws.com/testflight/post', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(
+                                order
+                                // "Order_Id": "90",
+                                // "Product_Id": "5",
+                                // "Product_Name": "MOhsin ki Shirt"
+                            ),
+                        }).then(json => json.json()).then(res => {
+                            i++;
+                            console.log(res)}
+                        ).catch(() => console.log('error')
+                        )
+
+
                     }}
                 >
-                    <Text  style ={{color :'white' , fontSize : 22 , fontWeight:'500'}}>Checkout</Text>
+                    <Text style={{ color: 'white', fontSize: 22, fontWeight: '500' }}>Checkout</Text>
                 </TouchableHighlight>
             </View>
 
@@ -161,4 +189,4 @@ const MapStateToProps = ({ shop }) => {
 
 }
 
-export default connect(MapStateToProps, { updateCart, delItem, addToTotal, clearCart })(Cart);
+export default connect(MapStateToProps, { updateCart, delItem, addToTotal, clearCart, placeOrder })(Cart);
