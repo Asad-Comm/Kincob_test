@@ -64,12 +64,20 @@ export const nameChanged = (text) => {
 
 
 
-export const loginUser = ({ email, password, userName }, success) => {
+export const loginUser = ({ email, password, userName , pool }, success) => {
     return (dispatch) => {
 
+        let id = pool.uP
+        let cp = pool.cId
+        console.log("Pool for now", pool , id , cp);
+        
+        // let poolData = {
+        //     UserPoolId: 'us-east-1_uQuK4765n', // your user pool id here
+        //     ClientId: '566r3o48dsp66po8s8aiqsccse' // your app client id here
+        // };
         let poolData = {
-            UserPoolId: 'us-east-1_uQuK4765n', // your user pool id here
-            ClientId: '566r3o48dsp66po8s8aiqsccse' // your app client id here
+            UserPoolId: id, // your user pool id here
+            ClientId: cp // your app client id here
         };
         let userPool =
             new AmazonCognitoIdentity.CognitoUserPool(poolData);

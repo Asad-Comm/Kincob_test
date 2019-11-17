@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image , StatusBar } from 'react-native';
+import { View, Image, StatusBar } from 'react-native';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
@@ -13,9 +13,10 @@ import LoginForm from '../screens/Login/LoginForm';
 import T_Login from "../screens/Login/T_Login";
 import V_Login from '../screens/Login/V_Login';
 import SignUp from '../screens/Login/SignUp';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Cart from '../screens/Cart';
 import ProductModal from '../screens/ProductModal';
+import Introd from '../screens/Intro';
 
 
 class Nav extends React.Component {
@@ -46,9 +47,10 @@ class Nav extends React.Component {
             <View style={{ flex: 1 }}>
                 {/* <StatusBar backgroundColor = '#6C63FF' /> */}
                 {/* <ProductModal/> */}
-                <AppCont/>
+                <AppCont />
+
                 {/* <LoginCont/> */}
-                
+                {/* <Introd /> */}
 
             </View>
         )
@@ -57,48 +59,65 @@ class Nav extends React.Component {
 
 
 
-const LoginNav = createStackNavigator({
-    SignUp:{
-        
-        screen : SignUp,
-        navigationOptions:{
-            header :() => null
-        }
-        
+export const Tailor = createStackNavigator({
+    SignUp: {
+        screen: SignUp,
+        // params: {
+        //     userPool: "us-east-1_1WdobZGcn",
+        //     clientId: "4hi225vi3e150ugn70fjtov5v2",
+        //     type: "Tailor"
+        // }
     }
     ,
+    TrueReg: {
+        screen: Friends,
+        // navigationOptions: {
+        //     header: () => null
+        // }
+    }
+},{
+    defaultNavigationOptions:{
+        header:() => null
+    }
+})
+
+
+
+
+ const Vendor = createStackNavigator({
+    VendorLogin: {
+        screen: SignUp,
+        params: {
+
+        }
+    }
+    ,
+    TrueReg: {
+        screen: Friends,
+        navigationOptions: {
+            header: () => null
+        }
+    }
+},
+{
+    defaultNavigationOptions:{
+        header:() => null
+    }
+})
+
+export const LoginNav = createStackNavigator({
+
     UserLogin: {
         screen: LoginForm,
 
-        navigationOptions:{
-            header :() => null,
-            
-        }
-    },
-    TailorLogin: {
-        screen: T_Login,
-        navigationOptions:{
-            header :() => null
-        }
-    },
-    VendorLogin: {
-        screen: V_Login,
-        navigationOptions:{
-            header :() => null
-        }
-    },
-    TrueReg :{
-        screen: Friends,
-        navigationOptions:{
-            header :() => null
+        navigationOptions: {
+            header: () => null,
         }
     }
-    
-
 }
-,
+    ,
     {
-        headerMode:'float'
+        headerMode: 'float'
     })
 
 const LoginCont = createAppContainer(LoginNav);
@@ -130,8 +149,8 @@ const MyNav = createMaterialBottomTabNavigator({
                 />
             ),
             tabBarLabel: () => null,
-            
-            
+
+
         }
     },
     Home: {
@@ -175,48 +194,89 @@ const MyNav = createMaterialBottomTabNavigator({
 
 },
     {
-        
+
         initialRouteName: 'Explore',
         activeColor: '#5374eb',
         barStyle: {
-            
+
             backgroundColor: 'white',
-            
+
 
         },
         // shifting : true,
     }
 )
 
-const AuthNav = createStackNavigator({
-    Login: {
-        screen: LoginForm,
-        navigationOptions: {
-            header: () => null,
 
-        }
-    }
-})
-
-const Navigator = createStackNavigator({
-
-    MyNav: {
-        screen: MyNav,
+export const User = createStackNavigator({
+    SignUp: {
+        screen: SignUp,
+        // params: {
+        //     userPool: "us-east-1_uQuK4765n",
+        //     clientId: "566r3o48dsp66po8s8aiqsccse",
+        //     type: "User"
+        // },
         navigationOptions: {
             header: () => null
         }
-    }
+    },
+
+    TrueReg: {
+        screen: Friends,
+        navigationOptions: {
+            header: () => null
+        }
+    },
+
+
+    // MyNav: {
+    //     screen: MyNav,
+    //     navigationOptions: {
+    //         header: () => null
+    //     }
+    // }
+
 })
 
 
-const AppCont = createAppContainer(Navigator);
+
+// const Navigator = createStackNavigator({
+
+//     MyNav: {
+//         screen: MyNav,
+//         navigationOptions: {
+//             header: () => null
+//         }
+//     }
+// })
+
+const OH = createStackNavigator({
+    Introd:{
+        screen:Introd
+    },
+    Tailor:{
+        screen:Tailor
+    },
+    User:{
+        screen:User
+    },
+    Vendor:{
+        screen : Vendor
+    }
+},{
+    defaultNavigationOptions:{
+        header:() => null
+    }
+})
+
+const AppCont = createAppContainer(OH);
 
 
 const MapStateToProps = (auth) => {
 
-    const { userName, password, email, error_message , signUpSuccess} = auth
+    const { userName, password, email, error_message, signUpSuccess } = auth
 
-    console.log('gooloto', password, email, userName, error_message , signUpSuccess);
+    console.log('gooloto', password, email, userName, error_message, signUpSuccess);
 
 
     return {

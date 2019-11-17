@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableHighlight, StatusBar, Modal, UIManager, LayoutAnimation , Dimensions } from 'react-native';
+import { View, Text, TouchableHighlight, StatusBar, Modal, UIManager, LayoutAnimation , Dimensions  } from 'react-native';
 import { LoginCard, CardItem } from '../../Common';
 import Input from './Input';
 import { emailChanged, passwordChanged, nameChanged, loginUser } from '../../Redux/Actions';
@@ -11,15 +11,15 @@ const height  = Dimensions.get('window').height;
 if (Platform.OS === 'android') { UIManager.setLayoutAnimationEnabledExperimental(true) }
 
 var CustomLayoutSpring = {
-    duration: 1000,
+    duration: 400,
     create: {
-        type: LayoutAnimation.Types.spring,
-        property: LayoutAnimation.Properties.scaleXY,
-        springDamping: 0.7,
+        type: LayoutAnimation.Types.easeOut,
+        property: LayoutAnimation.Properties.scaleX,
+        springDamping: 1.3,
     },
     update: {
         type: LayoutAnimation.Types.spring,
-        springDamping: 0.7,
+        springDamping: 1.3,
     },
 };
 
@@ -28,10 +28,19 @@ class SignUp extends React.Component {
     componentDidMount() {
         this.setState({error_message:null});
         LayoutAnimation.configureNext(CustomLayoutSpring);
+        let uP = this.props.navigation.getParam("userPool");
+        let cId = this.props.navigation.getParam("clientId");
+        let type = this.props.navigation.getParam("type");
+
+        console.log("did mout",uP,cId)
+        
+        this.setState({pool: { uP , cId } , type });
 
     }
 
     state = {
+        pool : null,
+        type:'',
         nameChanged: this.props.userName,
         password: this.props.password,
         email: this.props.email,
@@ -44,14 +53,15 @@ class SignUp extends React.Component {
 
 
     render() {
+        const { pool } = this.state;
         const { email, password, userName } = this.props;
         LayoutAnimation.configureNext(CustomLayoutSpring);
         return (
             <View style={{ flex: 1, backgroundColor: '#2A2B3C' }}>
-                <StatusBar backgroundColor='#2A2B3C' />
+                <StatusBar backgroundColor="transparent"  />
                 {/* {this.state.error_message !== null ? this.state.modalVisible = !this.state.modalVisible : null} */}
                 {this.state.modalVisible ? this.renderModal() : null}
-                <Text style={{ fontSize: 30, color: 'white', marginTop: height/40, marginBottom: 30, marginLeft: 40 }}>Create Account</Text>
+                <Text style={{   fontSize: 30, color: 'white', marginTop: height/10, marginBottom: 30, marginLeft: 40 }}>Create {this.state.type} Account</Text>
                 <LoginCard>
                     <CardItem>
                         <Input
@@ -92,11 +102,13 @@ class SignUp extends React.Component {
                 </LoginCard>
                 <TouchableHighlight
                     onPress={() => { 
-                        this.props.loginUser({ email, password, userName }, success => {
+                        this.props.loginUser({ email, password, userName , pool }, success => {
 
                             // this.setState({showError:!this.state.showError})
                             console.log('success call', success);
                             this.props.navigation.navigate('TrueReg');
+                            console.log("HIr sugnup",pool);
+                            
 
                         });
                         
