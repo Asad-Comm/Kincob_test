@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import Cart from '../screens/Cart';
 import ProductModal from '../screens/ProductModal';
 import Introd from '../screens/Intro';
+import TaylorHome from '../screens/TaylorHome';
 
 
 class Nav extends React.Component {
@@ -48,7 +49,7 @@ class Nav extends React.Component {
                 {/* <StatusBar backgroundColor = '#6C63FF' /> */}
                 {/* <ProductModal/> */}
                 <AppCont />
-
+                {/* <TaylorHome /> */}
                 {/* <LoginCont/> */}
                 {/* <Introd /> */}
 
@@ -74,17 +75,22 @@ export const Tailor = createStackNavigator({
         // navigationOptions: {
         //     header: () => null
         // }
-    }
-},{
-    defaultNavigationOptions:{
-        header:() => null
+    },
+    Login:{
+        screen:LoginForm
+    },
+    MyNav: TaylorHome
+    
+}, {
+    defaultNavigationOptions: {
+        header: () => null
     }
 })
 
 
 
 
- const Vendor = createStackNavigator({
+const Vendor = createStackNavigator({
     VendorLogin: {
         screen: SignUp,
         params: {
@@ -97,13 +103,17 @@ export const Tailor = createStackNavigator({
         navigationOptions: {
             header: () => null
         }
+    },
+    
+    Login:{
+        screen:LoginForm
     }
 },
-{
-    defaultNavigationOptions:{
-        header:() => null
-    }
-})
+    {
+        defaultNavigationOptions: {
+            header: () => null
+        }
+    })
 
 export const LoginNav = createStackNavigator({
 
@@ -126,19 +136,19 @@ const LoginCont = createAppContainer(LoginNav);
 const MyNav = createMaterialBottomTabNavigator({
 
 
-    WishList: {
-        screen: WishList,
-        navigationOptions: {
+    // WishList: {
+    //     screen: WishList,
+    //     navigationOptions: {
 
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    style={{ height: 25, width: 25, tintColor: tintColor }}
-                    source={require('../assets/icons/bottomNavBarIcons/Cart.png')}
-                />
-            ),
-            tabBarLabel: () => null,
-        }
-    },
+    //         tabBarIcon: ({ tintColor }) => (
+    //             <Image
+    //                 style={{ height: 25, width: 25, tintColor: tintColor }}
+    //                 source={require('../assets/icons/bottomNavBarIcons/Cart.png')}
+    //             />
+    //         ),
+    //         tabBarLabel: () => null,
+    //     }
+    // },
     Account: {
         screen: Account,
         navigationOptions: {
@@ -153,18 +163,6 @@ const MyNav = createMaterialBottomTabNavigator({
 
         }
     },
-    Home: {
-        screen: Cart,
-        navigationOptions: {
-            tabBarIcon: ({ tintColor }) => (
-                <Image
-                    style={{ height: 25, width: 25, tintColor: tintColor }}
-                    source={require('../assets/icons/shop.png')}
-                />
-            ),
-            tabBarLabel: () => null,
-        }
-    },
     Explore: {
         screen: Explore,
         navigationOptions: {
@@ -177,6 +175,19 @@ const MyNav = createMaterialBottomTabNavigator({
             tabBarLabel: () => null,
         }
     },
+    Home: {
+        screen: Cart,
+        navigationOptions: {
+            tabBarIcon: ({ tintColor }) => (
+                <Image
+                    style={{ height: 25, width: 25, tintColor: tintColor }}
+                    source={require('../assets/icons/bottomNavBarIcons/Cart.png')}
+                />
+            ),
+            tabBarLabel: () => null,
+        }
+    },
+   
     // Friends:{
     //     screen:Friends,
     //     navigationOptions:{
@@ -227,14 +238,18 @@ export const User = createStackNavigator({
             header: () => null
         }
     },
+    Login:{
+        screen:LoginForm
+    },
 
 
-    // MyNav: {
-    //     screen: MyNav,
-    //     navigationOptions: {
-    //         header: () => null
-    //     }
-    // }
+
+    MyNav: {
+        screen: MyNav,
+        navigationOptions: {
+            header: () => null
+        }
+    }
 
 })
 
@@ -251,21 +266,21 @@ export const User = createStackNavigator({
 // })
 
 const OH = createStackNavigator({
-    Introd:{
-        screen:Introd
+    Introd: {
+        screen: Introd
     },
-    Tailor:{
-        screen:Tailor
+    Tailor: {
+        screen: Tailor
     },
-    User:{
-        screen:User
+    User: {
+        screen: User
     },
-    Vendor:{
-        screen : Vendor
+    Vendor: {
+        screen: Vendor
     }
-},{
-    defaultNavigationOptions:{
-        header:() => null
+}, {
+    defaultNavigationOptions: {
+        header: () => null
     }
 })
 

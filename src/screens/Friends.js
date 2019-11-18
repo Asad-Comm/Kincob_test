@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image  , TouchableHighlight } from 'react-native';
+import { View, Text, Image, TouchableHighlight } from 'react-native';
 import { LoginCard, CardItem } from '../Common';
 import Input from './Login/Input';
 import { connect } from 'react-redux';
@@ -38,10 +38,12 @@ class Friends extends React.Component {
 
     render() {
         const src = require('../assets/icons/avatar.png')
-        return (
-            <View style={{ flex: 1, backgroundColor: '#2A2B3C' }}>
+        let type = this.props.navigation.getParam("type");
 
-                <Text style={{ marginBottom: 120, fontSize: 25, alignSelf: 'center', marginTop: 10, color: 'white' }}>User Login Verification</Text>
+        return (
+            <View style={{ flex: 1, backgroundColor: '#2A2B3C',justifyContent:'center' }}>
+
+                <Text style={{ marginBottom: 120, fontSize: 25, alignSelf: 'center', marginTop: 10, color: 'white' }}>{type} Login Verification</Text>
                 <LoginCard
                 >
                     <CardItem>
@@ -58,17 +60,17 @@ class Friends extends React.Component {
                 </LoginCard>
 
                 <TouchableHighlight
-                underlayColor = "purple"
-                 onPress={() => this.checkRegistration(success => {
-                    console.log("Verification successfull")
-                    this.props.navigation.navigate('UserLogin')
+                    underlayColor="purple"
+                    onPress={() => this.checkRegistration(success => {
+                        console.log("Verification successfull")
+                        this.props.navigation.navigate('UserLogin')
 
-                })}
-                 style={{ alignSelf: "center", backgroundColor: '#903DFF', paddingVertical: 12, paddingHorizontal: 55, marginTop: 70, borderRadius: 40 }}>
-                 
-                
+                    })}
+                    style={{ alignSelf: "center", backgroundColor: '#903DFF', paddingVertical: 12, paddingHorizontal: 55, marginTop: 70, borderRadius: 40 }}>
+
+
                     <Text
-                       
+
                         style={{ fontSize: 25, color: 'white', alignSelf: 'center' }}>VERIFY</Text>
 
                 </TouchableHighlight>

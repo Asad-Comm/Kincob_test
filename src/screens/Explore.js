@@ -105,7 +105,7 @@ class Explore extends React.Component {
 
                 <ScrollView>
                     {/* hide the sttus bar */}
-                    <StatusBar backgroundColor='#2A2B3C' />
+                    <StatusBar backgroundColor='transparent' translucent />
 
 
                     <View
@@ -143,6 +143,7 @@ class Explore extends React.Component {
                                             style={{ marginLeft: 20, flex: 1, position: 'absolute', backgroundColor: 'black', marginVertical: 235, width: 150, alignItems: 'center', opacity: 0.7 }}>
                                             <Text
                                                 onPress={() => {
+                                                   
                                                     this.setState({ item: item.item })
                                                     this.props.showModal(true);
                                                 }
@@ -185,37 +186,7 @@ class Explore extends React.Component {
                     />
 
 
-                    <Animated.View
-                        style={{
-                            transform: [{
-                                translateY: this.state.expandAnimation
-                            }], alignSelf: 'center', width: '100%'
-                        }}
-                    >
-
-                        <View style={{ position: "absolute", flexDirection: 'row', borderColor: 'lightgray', borderWidth: 1, elevation: 5, justifyContent: 'center', width: "90%", marginTop: 10, alignSelf: "center", backgroundColor: "#ffffff", height: "25%", borderTopRightRadius: 20, borderBottomRightRadius: 20, borderTopLeftRadius: 20, borderBottomLeftRadius: 20 }}>
-                            {/* <Text style ={{fontSize:15 , color:'gray', fontWeight:'900',padding:10}}>
-                    Search something...
-                </Text> */}
-                            <Image
-                                source={require('../assets/icons/bottomNavBarIcons/Search.png')}
-                                style={{ height: 20, width: 20, marginVertical: 10, opacity: 0.7 }}
-                            />
-                            <TextInput
-                                style={{ width: "80%", padding: 5, alignContent: 'center' }}
-                                placeholder=" Search something..."
-                                placeholderTextColor='gray'
-                                onFocus={() => this.aniamteBar()}
-                                onEndEditing={() => this.resetBar()}
-                                clearTextOnFocus={true}
-
-
-
-                            />
-
-                        </View>
-
-                    </Animated.View>
+                    
 
 
                     <View>

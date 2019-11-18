@@ -63,6 +63,8 @@ class LoginForm extends React.Component {
 
     }
 
+    
+
 
 
     static navigationOptions = {
@@ -146,7 +148,10 @@ class LoginForm extends React.Component {
                 style={{ borderRadius: 32, backgroundColor: '#903DFF', width: '80%', marginTop: 50 }}
                 underlayColor="#1e5ec1"
                 activeOpacity={0.8}
-                onPress={this.onButtonPress.bind(this)}>
+                onPress= { () =>
+                 {  this.props.navigation.navigate("MyNav");
+                     this.onButtonPress.bind(this)}
+                 }>
                 <Text style={{ fontSize: 20, color: "white", padding: 7, alignSelf: 'center' }}> Login </Text>
             </TouchableHighlight>
         );
@@ -197,7 +202,7 @@ class LoginForm extends React.Component {
     //   }
 
     render() {
-
+        const type = this.props.navigation.getParam('type');
         return (
             <View style={{ flex: 1, backgroundColor: '#2A2B3C' }}>
                 <Text style={{ fontSize: 55, color: 'white', marginTop: 60, marginBottom: 30, alignSelf:'center' }}>KINCOB</Text>
@@ -208,7 +213,7 @@ class LoginForm extends React.Component {
                 source = {require("../../assets/logo/weather.png")}
                 />
                 </Transition> */}
-                <Text style={{ marginBottom: 90, fontSize: 25, alignSelf: 'center', marginTop: 40, color: 'white' }}>User Login</Text>
+                <Text style={{ marginBottom: 90, fontSize: 25, alignSelf: 'center', marginTop: 40, color: 'white' }}>{type} Login</Text>
                 <LoginCard
                 >
                     <CardItem>

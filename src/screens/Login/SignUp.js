@@ -106,7 +106,9 @@ class SignUp extends React.Component {
 
                             // this.setState({showError:!this.state.showError})
                             console.log('success call', success);
-                            this.props.navigation.navigate('TrueReg');
+                            this.props.navigation.navigate('TrueReg',{
+                                type: this.state.type
+                            });
                             console.log("HIr sugnup",pool);
                             
 
@@ -128,7 +130,9 @@ class SignUp extends React.Component {
                 <View style={{ flexDirection: 'row', alignSelf: 'center', marginTop: 80 }}>
                     <Text style={{ fontSize: 18, color: 'white' }}>Already have an account?</Text>
                     <Text 
-                    onPress ={() =>this.props.navigation.navigate('UserLogin')
+                    onPress ={() =>this.props.navigation.navigate('Login',{
+                        type:this.state.type
+                    })
                 }
                     style={{ fontSize: 18, color: 'white', fontWeight: '700' }}> Sign In</Text>
 
